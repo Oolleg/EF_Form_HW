@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "PlanetScale": "Server=aws.connect.psdb.cloud;Database=maindb;user=g9qlg9xc3xwhbttud5uf;password=pscale_pw_Ua2ZlzNFfuL5vEv0DFuW49J5rsFtgFijdVD7zQ63swW;SslMode=VerifyFull;"
+  }
+}

@@ -1,0 +1,68 @@
+﻿@model Form_HW.Models.Home.FormValidModel;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@functions{
+    public string ValidStyleInput(bool? result)
+    {
+        if(result == null)
+        {
+            return "";
+        }
+        
+        return (result.Value) ? "is-valid" : "is-invalid";
+       
+    }
+}
+
+
+<form asp-action="ProcessTransferForm" method="post" >
+    <div class="container">
+        <div class="row g-3 justify-content-center mt-5">
+            <div class="col-md-5 mainBorder py-5">
+                <div class="row g-3 justify-content-center mb-3">
+                  <div class="col-md-10">
+                    <label for="validationName" class="form-label">First name</label>
+                        <input name="user-fistname" type="text" class="form-control @ValidStyleInput(Model.IsNameValid)" id="validationName" value="@Model.FormData.FistName" aria-describedby="validationDivName" required>
+                        <div id="validationDivName" class="invalid-feedback">
+                            Name must start with a capital letter and may only contain letters.
+                    </div>
+                  </div>
+                </div>
+                <div class="row g-3 justify-content-center mb-3">
+                  <div class="col-md-10">
+                    <label for="validationLastname" class="form-label">Last name</label>
+                        <input name="user-lastname" type="text" class="form-control @ValidStyleInput(Model.IsLastameValid)" id="validationLastname" value="@Model.FormData.LastName" aria-describedby="validationDivLastname" required>
+                        <div id="validationDivLastname" class="invalid-feedback">
+                            LastName must start with a capital letter and may only contain letters.
+                    </div>
+                  </div>
+                </div>
+                <div class="row g-3 justify-content-center mb-3">
+                    <div class="col-md-10">
+                        <label for="validationPhone" class="form-label">E-mail</label>
+                        <input name="user-email" type="email" class="form-control @ValidStyleInput(Model.IsEmailValid)" id="validationPhone" value="@Model.FormData.Email" aria-describedby="validationDivEmail" required>
+                        <div id="validationDivEmail" class="invalid-feedback">
+                            Email may contain uppercase and lowercase latin letters and must contain symbol @@.
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3 justify-content-center mb-4">
+                    <div class="col-md-10">
+                        <label for="validationPhone" class="form-label">Phone number</label>
+                        <input name="user-phone" type="text" class="form-control @ValidStyleInput(Model.IsPhoneValid)" id="validationPhone" value="@Model.FormData.Phone" aria-describedby="validationDivPhone" required>
+                        <div id="validationDivPhone" class="invalid-feedback">
+                            Phone must be 0222222222 or 022-222-22-22. 
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3 justify-content-center">
+                    <div class="col-md-2 ">
+                        <button class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+  </form>
