@@ -3,6 +3,7 @@ using EF_Form_HW.Models;
 using EF_Form_HW.Models.Home;
 using EF_Form_HW.Services.Valid;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -25,7 +26,7 @@ namespace EF_Form_HW.Controllers
             _valid = valid;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             FormModel? formModel;
             FormValidModel? validModel = new ();
@@ -53,7 +54,7 @@ namespace EF_Form_HW.Controllers
                     user.Email = formModel.Email;
                     user.RegisterTime = DateTime.Now;
 
-                    _db.Users.Add(user);
+                   await _db.Users.AddAsync(user);
                     _db.SaveChanges();
 
                     return RedirectToAction(nameof(BaseTable));
@@ -67,10 +68,10 @@ namespace EF_Form_HW.Controllers
         }
 
         //napisat formu i sdelat tablicu
-        public ViewResult BaseTable()
+        public async Task<ViewResult> BaseTable()
         {
             
-            return View(_db.Users.ToList<User>());
+            return View(await _db.Users.ToListAsync<User>());
         }
 
 
