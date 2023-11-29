@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection.Emit;
 
-namespace Form_HW.Data.Entities
+namespace EF_Form_HW.Data.Entities
 {
     public class DataContext : DbContext
     {
@@ -14,6 +14,11 @@ namespace Form_HW.Data.Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("EF_FORM_HW");
+            modelBuilder.Entity<User>()
+               .Property(u => u.RegisterTime)
+               .HasDefaultValueSql("NOW()");
         }
+
+        
     }
 }

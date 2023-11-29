@@ -1,4 +1,4 @@
-namespace Form_HW.Models
+namespace EF_Form_HW.Models
 {
     public class ErrorViewModel
     {

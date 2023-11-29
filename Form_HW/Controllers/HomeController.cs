@@ -1,25 +1,31 @@
-﻿using Form_HW.Models;
-using Form_HW.Models.Home;
-using Form_HW.Services.Valid;
+﻿using EF_Form_HW.Data.Entities;
+using EF_Form_HW.Models;
+using EF_Form_HW.Models.Home;
+using EF_Form_HW.Services.Valid;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Text.Json;
 
 
-namespace Form_HW.Controllers
+namespace EF_Form_HW.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly DataContext _db;
+        private readonly expandingMethods _expMethods;
         IValidationService _valid;
 
-        public HomeController(ILogger<HomeController> logger, IValidationService valid)
+        public HomeController(ILogger<HomeController> logger, IValidationService valid, 
+            DataContext dataContext, expandingMethods expMethods)
         {
+            _expMethods = expMethods;
+            _db = dataContext;
             _logger = logger;
             _valid = valid;
         }
 
-        public ViewResult Index()
+        public IActionResult Index()
         {
             FormModel? formModel;
             FormValidModel? validModel = new ();
@@ -37,14 +43,37 @@ namespace Form_HW.Controllers
                 validModel.IsPhoneValid = _valid.IsPhoneValid(formModel!.Phone);
                 validModel.IsEmailValid =_valid.IsEmailValid(formModel!.Email);
                 validModel.FormData = formModel;
+
+                if (_expMethods.validModelFildsChecker(validModel))
+                {
+                    User user = new();
+                    user.Name = formModel.FistName;
+                    user.LastName = formModel.LastName;
+                    user.Phone = formModel.Phone;
+                    user.Email = formModel.Email;
+                    user.RegisterTime = DateTime.Now;
+
+                    _db.Users.Add(user);
+                    _db.SaveChanges();
+
+                    return RedirectToAction(nameof(BaseTable));
+                }
             }else
             {
                 validModel.FormData = new();
             }
-           
 
             return View(validModel);
         }
+
+        //napisat formu i sdelat tablicu
+        public ViewResult BaseTable()
+        {
+            
+            return View(_db.Users.ToList<User>());
+        }
+
+
 
         [HttpPost]
         public IActionResult ProcessTransferForm(FormModel? formModel)

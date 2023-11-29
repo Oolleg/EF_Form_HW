@@ -1,5 +1,5 @@
-using Form_HW.Data.Entities;
-using Form_HW.Services.Valid;
+using EF_Form_HW.Data.Entities;
+using EF_Form_HW.Services.Valid;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using MySqlConnector;
@@ -10,8 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IValidationService, MyValidationService>();
+builder.Services.AddSingleton<expandingMethods>();
 
-builder.Configuration.AddJsonFile("PlanetScale");
+builder.Configuration.AddJsonFile("dbsettings.json");
 
 String? connectString = builder.Configuration.GetConnectionString("PlanetScale");
 

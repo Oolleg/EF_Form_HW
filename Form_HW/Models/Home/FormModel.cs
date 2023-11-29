@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Form_HW.Models.Home
+namespace EF_Form_HW.Models.Home
 {
     public class FormModel
     {

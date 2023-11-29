@@ -1,4 +1,4 @@
-﻿namespace Form_HW.Data.Entities
+﻿namespace EF_Form_HW.Data.Entities
 {
     public class User
     {
